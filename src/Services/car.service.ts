@@ -13,12 +13,12 @@ class CarService {
   protected carM = new CarModel();
 
   public async createNewCar(car: ICar) {
-    const newCar = await this.carM.createNewCar(car);
+    const newCar = await this.carM.createNew(car);
     return this.createCarDomain(newCar);
   }
 
   public async getAllCars() {
-    const allCars = await this.carM.getAllCars();
+    const allCars = await this.carM.getAll();
     return allCars.map((c) => new Car(c));
   }
 
@@ -32,7 +32,7 @@ class CarService {
   }
 
   public async updateCar(id: string, body: ICar) {
-    const updated = await this.carM.updateCar(id, body);
+    const updated = await this.carM.update(id, body);
     if (updated) {
       const domain = new Car(updated);
       return domain;
