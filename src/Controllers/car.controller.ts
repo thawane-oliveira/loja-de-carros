@@ -28,7 +28,7 @@ class CarController {
       const newCar = await this.service.createNewCar(car);
       return this.res.status(201).json(newCar);
     } catch (error) {
-      return this.res.status(500).json({ message: 'Revise os campos' });
+      return this.res.status(500).json({ message: 'Check the fields' });
     }
   }
 
@@ -37,7 +37,7 @@ class CarController {
       const allCars = await this.service.getAllCars();
       return this.res.status(200).json(allCars);
     } catch (error) {
-      return this.res.status(404).json({ message: 'Não foram encontrados resultados' });
+      return this.res.status(404).json({ message: 'No results found' });
     }
   }
 
@@ -45,6 +45,20 @@ class CarController {
     const { id } = this.req.params;
     try {
       const car = await this.service.getById(id);
+      if (!car) {
+        return this.res.status(404).json({ message: 'Car not found' });
+      }
+      return this.res.status(200).json(car);
+    } catch (error) {
+      return this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
+
+  public async updateCar() {
+    const { id } = this.req.params;
+    const { body } = this.req;
+    try {
+      const car = await this.service.updateCar(id, body);
       if (!car) {
         return this.res.status(404).json({ message: 'Car not found' });
       }

@@ -30,6 +30,15 @@ class CarService {
     }
     return null;
   }
+
+  public async updateCar(id: string, body: ICar) {
+    const updated = await this.carM.updateCar(id, body);
+    if (updated) {
+      const domain = new Car(updated);
+      return domain;
+    }
+    return null;
+  }
 }
 
 export default CarService;
