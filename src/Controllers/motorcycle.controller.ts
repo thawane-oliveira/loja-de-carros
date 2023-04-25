@@ -31,6 +31,28 @@ class MotorcycleController {
       return this.res.status(500).json({ message: 'Check the fields' });
     }
   }
+
+  public async getAll() {
+    try {
+      const allMotorcycles = await this.service.getAll();
+      return this.res.status(200).json(allMotorcycles);
+    } catch (error) {
+      return this.res.status(404).json({ message: 'No results found' });
+    }
+  }
+
+  public async getById() {
+    const { id } = this.req.params;
+    try {
+      const motorcycle = await this.service.getById(id);
+      if (!motorcycle) {
+        return this.res.status(404).json({ message: 'Motorcycle not found' });
+      }
+      return this.res.status(200).json(motorcycle);
+    } catch (error) {
+      return this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
 }
 
 export default MotorcycleController;
