@@ -7,9 +7,9 @@ connectToDatabase()
   .then(() => {
     app.listen(PORT, () => console.log(`Running server on port: ${PORT}`));
   })
-  .catch(() => {
-    // console.log('Connection with database generated an error:\r\n');
-    // console.error(error);
-    // console.log('\r\nServer initialization cancelled');
+  .catch((error) => {
+    console.log('Connection with database generated an error:\r\n');
+    console.error(error);
+    console.log('\r\nServer initialization cancelled');
     process.exit(0);
   });

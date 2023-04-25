@@ -10,10 +10,25 @@ class CarService {
     return null;
   }
 
+  protected carM = new CarModel();
+
   public async createNewCar(car: ICar) {
-    const carM = new CarModel();
-    const newCar = await carM.createNewCar(car);
+    const newCar = await this.carM.createNewCar(car);
     return this.createCarDomain(newCar);
+  }
+
+  public async getAllCars() {
+    const allCars = await this.carM.getAllCars();
+    return allCars.map((c) => new Car(c));
+  }
+
+  public async getById(id: string) {
+    const car = await this.carM.getById(id);
+    if (car) {
+      const domain = new Car(car);
+      return domain;
+    }
+    return null;
   }
 }
 
