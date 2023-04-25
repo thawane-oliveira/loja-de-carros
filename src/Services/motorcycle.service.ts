@@ -30,6 +30,15 @@ class MotorcycleService {
     }
     return null;
   }
+
+  public async update(id: string, body: IMotorcycle) {
+    const updated = await this.motorM.update(id, body);
+    if (updated) {
+      const domain = new Motorcycle(updated);
+      return domain;
+    }
+    return null;
+  }
 }
 
 export default MotorcycleService;

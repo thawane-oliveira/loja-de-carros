@@ -18,4 +18,9 @@ router.get(
   (req: Request, res: Response) => new MotorcycleController(req, res).getById(),
 );
 
+router.put(
+  '/:id',
+  (req: Request, res: Response) => new MotorcycleController(req, res).update(),
+);
+
 export default router;

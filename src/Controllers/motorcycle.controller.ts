@@ -53,6 +53,20 @@ class MotorcycleController {
       return this.res.status(422).json({ message: 'Invalid mongo id' });
     }
   }
+
+  public async update() {
+    const { id } = this.req.params;
+    const { body } = this.req;
+    try {
+      const motorcycle = await this.service.update(id, body);
+      if (!motorcycle) {
+        return this.res.status(404).json({ message: 'Motorcycle not found' });
+      }
+      return this.res.status(200).json(motorcycle);
+    } catch (error) {
+      return this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
 }
 
 export default MotorcycleController;
