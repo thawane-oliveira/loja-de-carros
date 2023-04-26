@@ -3,11 +3,8 @@ import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleModel from '../Models/motorcycle.model';
 
 class MotorcycleService {
-  public createMotorDomain(motorcycle: IMotorcycle | null): Motorcycle | null {
-    if (motorcycle) {
-      return new Motorcycle(motorcycle);
-    }
-    return null;
+  public createMotorDomain(motorcycle: IMotorcycle): Motorcycle {
+    return new Motorcycle(motorcycle);
   }
 
   protected motorM = new MotorcycleModel();
