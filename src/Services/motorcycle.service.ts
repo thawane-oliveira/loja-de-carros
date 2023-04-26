@@ -36,6 +36,12 @@ class MotorcycleService {
     }
     return null;
   }
+
+  public async delete(id: string) {
+    const motorcycle = await this.motorM.getById(id);
+   
+    if (motorcycle) { await this.motorM.deleteVehicle(id); }
+  }
 }
 
 export default MotorcycleService;

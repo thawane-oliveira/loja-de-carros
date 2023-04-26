@@ -23,10 +23,11 @@ abstract class AbstractODM<T> {
   }
 
   public async update(id: string, body: Partial<T>): Promise<T | null> {
-    if (id) {
-      return this.model.findOneAndUpdate({ _id: id }, { ...body }, { new: true });
-    }
-    return null;
+    return this.model.findOneAndUpdate({ _id: id }, { ...body }, { new: true });
+  }
+
+  public async deleteVehicle(id: string): Promise<T | null> {
+    return this.model.findOneAndDelete({ _id: id });
   }
 }
 

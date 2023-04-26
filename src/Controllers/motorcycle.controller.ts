@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleService from '../Services/motorcycle.service';
 
+const motorcycleNotFound = 'Motorcycle not found';
+const invalidId = 'Invalid mongo id';
 class MotorcycleController {
   private req: Request;
   private res: Response;
@@ -46,11 +48,11 @@ class MotorcycleController {
     try {
       const motorcycle = await this.service.getById(id);
       if (!motorcycle) {
-        return this.res.status(404).json({ message: 'Motorcycle not found' });
+        return this.res.status(404).json({ message: motorcycleNotFound });
       }
       return this.res.status(200).json(motorcycle);
     } catch (error) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: invalidId });
     }
   }
 
@@ -60,11 +62,25 @@ class MotorcycleController {
     try {
       const motorcycle = await this.service.update(id, body);
       if (!motorcycle) {
-        return this.res.status(404).json({ message: 'Motorcycle not found' });
+        return this.res.status(404).json({ message: motorcycleNotFound });
       }
       return this.res.status(200).json(motorcycle);
     } catch (error) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: invalidId });
+    }
+  }
+
+  public async deleteMotorcycle() {
+    const { id } = this.req.params;
+    try {
+      const motorcycle = await this.service.getById(id);
+      if (!motorcycle) {
+        return this.res.status(404).json({ message: motorcycleNotFound });
+      }
+      await this.service.delete(id);
+      return this.res.status(200).end();
+    } catch (error) {
+      return this.res.status(422).json({ message: invalidId });
     }
   }
 }

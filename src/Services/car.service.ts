@@ -36,6 +36,12 @@ class CarService {
     }
     return null;
   }
+
+  public async deleteCar(id: string) {
+    const car = await this.carM.getById(id);
+   
+    if (car) { await this.carM.deleteVehicle(id); }
+  }
 }
 
 export default CarService;
