@@ -3,11 +3,8 @@ import ICar from '../Interfaces/ICar';
 import CarModel from '../Models/car.model';
 
 class CarService {
-  public createCarDomain(car: ICar | null): Car | null {
-    if (car) {
-      return new Car(car);
-    }
-    return null;
+  public createCarDomain(car: ICar): Car {
+    return new Car(car);
   }
 
   protected carM = new CarModel();

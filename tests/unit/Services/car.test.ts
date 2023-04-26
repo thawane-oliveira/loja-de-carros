@@ -27,10 +27,24 @@ const updatedCar: ICar = {
   seatsQty: 5,
 };
 
+const invalidCar = {
+  model: 'Geronimos Cadillac',
+  year: 1986,
+  color: 'White',
+  status: true,
+  buyValue: 86.1006,
+  doorsQty: 2,
+  seatsQty: 2,
+};
+
 const newCar: Car = new Car(carInfo);
 const service = new CarService();
 
 describe('Testes da camada Service - Car', function () {
+  afterEach(function () {
+    sinon.restore();
+  });
+  
   it('Verifica se é possível criar um novo carro', async function () {
     sinon.stub(Model, 'create').resolves(newCar);
 
@@ -61,5 +75,21 @@ describe('Testes da camada Service - Car', function () {
     const updated = await service.updateCar('49', carInfo);
 
     expect(updated).to.be.deep.equal(updatedCar);
+  });
+
+  it('Verifica se não retorna um carro caso o id seja inválido', async function () {
+    sinon.stub(Model, 'findOne').resolves(null);
+
+    const singleCar = await service.getById('99999');
+
+    expect(singleCar).to.be.deep.equal(null);
+  });
+
+  it('Verifica se não atualiza um carro em caso de id inválido', async function () {
+    sinon.stub(Model, 'findOneAndUpdate').resolves(null);
+
+    const notUpdatedCar = await service.updateCar('77777', invalidCar);
+
+    expect(notUpdatedCar).to.be.deep.equal(null);
   });
 });
