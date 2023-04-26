@@ -92,4 +92,19 @@ describe('Testes da camada Service - Car', function () {
 
     expect(notUpdatedCar).to.be.deep.equal(null);
   });
+
+  it('Verifica se é possível deletar um carro', async function () {
+    sinon.stub(Model, 'create').resolves(newCar);
+
+    const car = await service.createNewCar(carInfo);
+
+    expect(car).to.be.deep.equal(newCar);
+
+    sinon.stub(Model, 'findOne').resolves(newCar);
+    sinon.stub(Model, 'findOneAndDelete').resolves(null);
+
+    const deletedCar = await service.deleteCar('49');
+
+    expect(deletedCar).to.be.deep.equal(undefined);
+  });
 });

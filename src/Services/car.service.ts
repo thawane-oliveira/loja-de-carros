@@ -38,9 +38,7 @@ class CarService {
   }
 
   public async deleteCar(id: string) {
-    const car = await this.carM.getById(id);
-   
-    if (car) { await this.carM.deleteVehicle(id); }
+    await this.carM.deleteVehicle(id);
   }
 }
 

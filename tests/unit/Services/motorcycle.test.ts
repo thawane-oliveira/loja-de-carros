@@ -92,4 +92,19 @@ describe('Testes da camada Service - Motorcycle', function () {
 
     expect(notUpdatedMotorcycle).to.be.deep.equal(null);
   });
+
+  it('Verifica se é possível deletar uma moto', async function () {
+    sinon.stub(Model, 'create').resolves(newMotorcycle);
+
+    const motorcycle = await service.createNewMotorcycle(motorcycleInfo);
+
+    expect(motorcycle).to.be.deep.equal(newMotorcycle);
+
+    sinon.stub(Model, 'findOne').resolves(newMotorcycle);
+    sinon.stub(Model, 'findOneAndDelete').resolves(null);
+
+    const deletedMotorcycle = await service.delete('49');
+
+    expect(deletedMotorcycle).to.be.deep.equal(undefined);
+  });
 });
